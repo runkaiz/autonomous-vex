@@ -2,15 +2,12 @@
 
 /**
  * A callback function for LLEMU's center button.
- *
- * When this callback is fired, it will toggle line 2 of the LCD text between
- * "I was pressed!" and nothing.
  */
 void on_center_button() {
 	static bool pressed = false;
 	pressed = !pressed;
 	if (pressed) {
-		pros::lcd::set_text(2, "I was pressed!");
+		pros::lcd::set_text(2, "Winston is always late");
 	} else {
 		pros::lcd::clear_line(2);
 	}
@@ -58,22 +55,31 @@ void competition_initialize() {}
  * will be stopped. Re-enabling the robot will restart the task, not re-start it
  * from where it left off.
  */
-#define LEFT_FRONT_WHEELS_PORT 1
-#define RIGHT_FRONT_WHEELS_PORT 2
-#define LEFT_BACK_WHEELS_PORT 3
-#define RIGHT_BACK_WHEELS_PORT 4
+#define LEFT_FRONT_WHEEL_PORT 1
+#define LEFT_BACK_WHEEL_PORT 2
+#define RIGHT_FRONT_WHEEL_PORT 3
+#define RIGHT_BACK_WHEEL_PORT 4
+#define BELT_PORT 5
+#define ARM_LEFT_PORT 6
+#define ARM_RIGHT_PORT 7
+// #define BASKET_PORT 8
 #define MOTOR_MAX_SPEED 100 // The motor has the 36 Gearset
 
 void autonomous() {
-  pros::Motor left_front_wheels (LEFT_FRONT_WHEELS_PORT);
-  pros::Motor left_back_wheels (LEFT_BACK_WHEELS_PORT);
-  pros::Motor right_front_wheels (RIGHT_FRONT_WHEELS_PORT, true); // This reverses the motor
-  pros::Motor right_back_wheels (RIGHT_BACK_WHEELS_PORT, true); // This reverses the motor
+  pros::Motor left_front_wheel (LEFT_FRONT_WHEEL_PORT);
+  pros::Motor left_back_wheel (LEFT_BACK_WHEEL_PORT);
+  pros::Motor right_front_wheel (RIGHT_FRONT_WHEEL_PORT, true); // This reverses the motor
+  pros::Motor right_back_wheel (RIGHT_BACK_WHEEL_PORT, true); // This reverses the motor
 
-  right_front_wheels.move_relative(1000, MOTOR_MAX_SPEED);
-  right_back_wheels.move_relative(1000, MOTOR_MAX_SPEED);
-  left_front_wheels.move_relative(1000, MOTOR_MAX_SPEED);
-  left_back_wheels.move_relative(1000, MOTOR_MAX_SPEED);
+  pros::Motor belt_motor (BELT_PORT);
+  pros::Motor arm_left_motor (ARM_LEFT_PORT);
+  pros::Motor arm_right_motor (ARM_RIGHT_PORT);
+  // pros::Motor basket_motor(BASKET_PORT);
+
+  right_front_wheel.move_relative(1000, MOTOR_MAX_SPEED);
+  right_back_wheel.move_relative(1000, MOTOR_MAX_SPEED);
+  left_front_wheel.move_relative(1000, MOTOR_MAX_SPEED);
+  left_back_wheel.move_relative(1000, MOTOR_MAX_SPEED);
 }
 
 /**
